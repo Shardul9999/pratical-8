@@ -1,111 +1,116 @@
-#include &lt;iostream&gt;
+#include <iostream>
 using namespace std;
 
+
 struct Node {
-int data;
-Node* next;
+    int data;
+    Node* next;
 };
+
 
 class Queue {
 private:
-Node* front; // Pointer to the front of the queue
-Node* rear; // Pointer to the rear of the queue
+    Node* front; // Pointer to the front of the queue
+    Node* rear;  // Pointer to the rear of the queue
 
 public:
-Queue() {
-front = nullptr;
-rear = nullptr;
-}
+   
+    Queue() {
+        front = nullptr;
+        rear = nullptr;
+    }
 
+    
+    bool isEmpty() {
+        return (front == nullptr);
+    }
 
-bool isEmpty() {
-return (front == nullptr);
-}
+    
+    void enqueue(int value) {
+        Node* newNode = new Node(); 
+        newNode->data = value;     
+        newNode->next = nullptr;    
 
+        if (rear == nullptr) {
+            front = rear = newNode; 
+        } else {
+            rear->next = newNode; 
+            rear = newNode;       
+        }
+        cout << "Added " << value << " to the queue." << endl;
+    }
 
+    
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty! Cannot delete elements." << endl;
+        } else {
+            Node* temp = front;       
+            cout << "Deleted " << temp->data << " from the queue." << endl;
+            front = front->next;       
 
-void enqueue(int value) {
-Node* newNode = new Node(); // Create a new node
-newNode-&gt;data = value; // Set the value
-newNode-&gt;next = nullptr; // The new node will be at the end, so next is null
+            if (front == nullptr) {    
+                rear = nullptr;        
+            }
+            delete temp;              
+        }
+    }
 
-if (rear == nullptr) { // If queue is empty
-front = rear = newNode; // Both front and rear point to the new node
-} else {
-rear-&gt;next = newNode; // Link the old rear to the new node
-rear = newNode; // Make the new node the new rear
-}
-cout &lt;&lt; &quot;Added &quot; &lt;&lt; value &lt;&lt; &quot; to the queue.&quot; &lt;&lt; endl;
-}
-
-void dequeue() {
-if (isEmpty()) {
-cout &lt;&lt; &quot;Queue is empty! Cannot delete elements.&quot; &lt;&lt; endl;
-} else {
-Node* temp = front; // Temporary node to hold the front
-cout &lt;&lt; &quot;Deleted &quot; &lt;&lt; temp-&gt;data &lt;&lt; &quot; from the queue.&quot; &lt;&lt; endl;
-front = front-&gt;next; // Move front to the next node
-
-if (front == nullptr) { // If the queue becomes empty
-rear = nullptr; // Set rear to null as well
-}
-delete temp; // Free the memory of the old front
-}
-}
-
-
-void printQueue() {
-if (isEmpty()) {
-cout &lt;&lt; &quot;Queue is empty!&quot; &lt;&lt; endl;
-} else {
-Node* temp = front;
-cout &lt;&lt; &quot;Queue elements: &quot;;
-while (temp != nullptr) {
-cout &lt;&lt; temp-&gt;data &lt;&lt; &quot; &quot;;
-temp = temp-&gt;next;
-}
-cout &lt;&lt; endl;
-}
-}
+   
+    void printQueue() {
+        if (isEmpty()) {
+            cout << "Queue is empty!" << endl;
+        } else {
+            Node* temp = front;
+            cout << "Queue elements: ";
+            while (temp != nullptr) {
+                cout << temp->data << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+    }
 };
 
+
 int main() {
-Queue q;
-int choice, value;
+    Queue q;
+    int choice, value;
 
-do {
-cout &lt;&lt; &quot;\n--- Queue Menu ---\n&quot;;
-cout &lt;&lt; &quot;1. Add (Enqueue)\n&quot;;
-cout &lt;&lt; &quot;2. Delete (Dequeue)\n&quot;;
-cout &lt;&lt; &quot;3. Print Queue\n&quot;;
-cout &lt;&lt; &quot;4. Exit\n&quot;;
-cout &lt;&lt; &quot;Enter your choice: &quot;;
-cin &gt;&gt; choice;
+    do {
+     
+        cout << "\n--- Queue Menu ---\n";
+        cout << "1. Add (Enqueue)\n";
+        cout << "2. Delete (Dequeue)\n";
+        cout << "3. Print Queue\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
+       
+        switch (choice) {
+        case 1:
+            cout << "Enter a value to add: ";
+            cin >> value;
+            q.enqueue(value);
+            break;
 
-switch (choice) {
-case 1:
-cout &lt;&lt; &quot;Enter a value to add: &quot;;
-cin &gt;&gt; value;
-q.enqueue(value);
-break;
+        case 2:
+            q.dequeue();
+            break;
 
-case 2:
-q.dequeue();
-break;
+        case 3:
+            q.printQueue();
+            break;
 
-case 3:
-q.printQueue();
-break;
+        case 4:
+            cout << "Exiting the program. Goodbye!" << endl;
+            break;
 
-case 4:
-cout &lt;&lt; &quot;Exiting the program. Goodbye!&quot; &lt;&lt; endl;
-break;
+        default:
+            cout << "Invalid choice! Please try again." << endl;
+        }
+    } while (choice != 4);
 
-default:
-cout &lt;&lt; &quot;Invalid choice! Please try again.&quot; &lt;&lt; endl;
-}
-} while (choice != 4);
-
-return 0;
+    return 0;
 }
