@@ -1,110 +1,115 @@
-#include &lt;iostream&gt;
+#include <iostream>
 using namespace std;
 
 #define SIZE 5 
+
 class CircularQueue {
 private:
-int arr[SIZE];
-int front, rear;
+    int arr[SIZE];
+    int front, rear;
 
 public:
-CircularQueue() {
-front = -1;
-rear = -1;
-}
+   
+    CircularQueue() {
+        front = -1;
+        rear = -1;
+    }
 
-bool isEmpty() {
-return (front == -1);
-}
+   
+    bool isEmpty() {
+        return (front == -1);
+    }
 
-bool isFull() {
-return ((rear + 1) % SIZE == front);
-}
+   
+    bool isFull() {
+        return ((rear + 1) % SIZE == front);
+    }
 
+   
+    void enqueue(int value) {
+        if (isFull()) {
+            cout << "Queue is full! Cannot add more elements." << endl;
+        } else {
+            if (isEmpty()) {
+                front = 0; 
+            }
+            rear = (rear + 1) % SIZE; 
+            arr[rear] = value;
+            cout << "Added " << value << " to the queue." << endl;
+        }
+    }
 
+    
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty! Cannot delete elements." << endl;
+        } else {
+            cout << "Deleted " << arr[front] << " from the queue." << endl;
+            if (front == rear) {
+                
+                front = rear = -1;
+            } else {
+                front = (front + 1) % SIZE; 
+            }
+        }
+    }
 
-void enqueue(int value) {
-if (isFull()) {
-cout &lt;&lt; &quot;Queue is full! Cannot add more elements.&quot; &lt;&lt; endl;
-} else {
-if (isEmpty()) {
-front = 0; // Set front to 0 if it&#39;s the first element
-}
-rear = (rear + 1) % SIZE; // Circular increment
-arr[rear] = value;
-cout &lt;&lt; &quot;Added &quot; &lt;&lt; value &lt;&lt; &quot; to the queue.&quot; &lt;&lt; endl;
-}
-}
-
-void dequeue() {
-if (isEmpty()) {
-cout &lt;&lt; &quot;Queue is empty! Cannot delete elements.&quot; &lt;&lt; endl;
-} else {
-cout &lt;&lt; &quot;Deleted &quot; &lt;&lt; arr[front] &lt;&lt; &quot; from the queue.&quot; &lt;&lt; endl;
-if (front == rear) {
-front = rear = -1;
-} else {
-front = (front + 1) % SIZE; // Circular increment
-}
-}
-}
-
-void printQueue() {
-if (isEmpty()) {
-
-cout &lt;&lt; &quot;Queue is empty!&quot; &lt;&lt; endl;
-} else {
-cout &lt;&lt; &quot;Queue elements: &quot;;
-int i = front;
-while (true) {
-cout &lt;&lt; arr[i] &lt;&lt; &quot; &quot;;
-if (i == rear) break;
-i = (i + 1) % SIZE; // Circular increment
-}
-cout &lt;&lt; endl;
-}
-}
+  
+    void printQueue() {
+        if (isEmpty()) {
+            cout << "Queue is empty!" << endl;
+        } else {
+            cout << "Queue elements: ";
+            int i = front;
+            while (true) {
+                cout << arr[i] << " ";
+                if (i == rear) break;
+                i = (i + 1) % SIZE; 
+            }
+            cout << endl;
+        }
+    }
 };
 
 
 int main() {
-CircularQueue q;
-int choice, value;
+    CircularQueue q;
+    int choice, value;
 
-do {
+    do {
+        
+        cout << "\n--- Circular Queue Menu ---\n";
+        cout << "1. Add (Enqueue)\n";
+        cout << "2. Delete (Dequeue)\n";
+        cout << "3. Print Queue\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-cout &lt;&lt; &quot;\n--- Circular Queue Menu ---\n&quot;;
-cout &lt;&lt; &quot;1. Add (Enqueue)\n&quot;;
-cout &lt;&lt; &quot;2. Delete (Dequeue)\n&quot;;
-cout &lt;&lt; &quot;3. Print Queue\n&quot;;
-cout &lt;&lt; &quot;4. Exit\n&quot;;
-cout &lt;&lt; &quot;Enter your choice: &quot;;
-cin &gt;&gt; choice;
+       
+        switch (choice) {
+        case 1:
+            cout << "Enter a value to add: ";
+            cin >> value;
+            q.enqueue(value);
+            break;
 
-switch (choice) {
+        case 2:
+            q.dequeue();
+            break;
 
-case 1:
-cout &lt;&lt; &quot;Enter a value to add: &quot;;
-cin &gt;&gt; value;
-q.enqueue(value);
-break;
+        case 3:
+            q.printQueue();
+            break;
 
-case 2:
-q.dequeue();
-break;
+        case 4:
+            cout << "Exiting the program. Goodbye!" << endl;
+            break;
 
-case 3:
-q.printQueue();
-break;
+        default:
+            cout << "Invalid choice! Please try again." << endl;
+        }
+    } while (choice != 4);
 
-case 4:
-cout &lt;&lt; &quot;Exiting the program. Goodbye!&quot; &lt;&lt; endl;
-break;
-
-default:
-cout &lt;&lt; &quot;Invalid choice! Please try again.&quot; &lt;&lt; endl;
-}
-} while (choice != 4);
-
-return 0;
+    return 0;
 }
