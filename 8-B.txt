@@ -10,8 +10,8 @@ struct Node {
 
 class Queue {
 private:
-    Node* front; // Pointer to the front of the queue
-    Node* rear;  // Pointer to the rear of the queue
+    Node* front; 
+    Node* rear; 
 
 public:
    
